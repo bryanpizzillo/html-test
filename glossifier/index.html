@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Glossifier Tests</title>
+        <script src="./glossifier.js"></script>
+        <style>
+            #content {
+                width:400px;
+            }
+            #btn-row {
+                margin-top: 10px;
+            }
+            #error {
+                background-color:lightpink;
+            }
+        </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", (evt) => {
+                const errorEl = document.getElementById("error");
+                const contentEl = document.getElementById("content");
+                const debugCB = document.getElementById("debugCB");
+                const glossifyBtn = document.getElementById("glossifyBtn");
+                const resetBtn = document.getElementById("resetBtn");
+                const resultsEl = document.getElementById("results");
+
+                function clearMessages() {
+                    errorEl.innerHTML = "";
+                    resultsEl.innerHTML = "";
+                }
+
+                //Handle Reset of form
+                resetBtn.addEventListener('click', () => {
+                    clearMessages();
+                    contentEl.value = "";                    
+                });
+
+                //Handle Glossify
+                glossifyBtn.addEventListener('click', async () => {
+                    clearMessages();
+                    const content = contentEl.value;
+
+                    if (content.trim() === '') {
+                        errorEl.innerText = "Content is empty"
+                        return;
+                    }
+                    
+                    try {
+                        const glossifiedRes = await glossify({
+                            content: contentEl.value,
+                            debug: debugCB.checked
+                        })
+                        resultsEl.innerText = glossifiedRes;
+                    } catch(err) {
+                        errorEl.innerText = err.message;
+                    }
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div id="error"></div>
+        <h2>Content</h2>
+        <div id="content-box">
+            <textarea id="content" rows="20"><div> <em>breast cancer</em> is in the dictionary. </div></textarea>
+        </div>        
+        <div><label for="debugCB">Enable Debug: </label><input type="checkbox" id="debugCB"></div>
+        <div id="btn-row">
+            <button id="glossifyBtn" type="button">Glossify</button>
+            <button id="resetBtn" type="reset">Reset</button>
+        </div>        
+        <h2>Results</h2>
+        <div id="results"></div>
+    </body>
+</html>
