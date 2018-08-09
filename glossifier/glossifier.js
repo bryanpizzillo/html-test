@@ -23,7 +23,8 @@ async function glossify({ content, language = "en", debug = false } = {}) {
             mode: 'cors',
             headers: {
                 'Content-type': 'text/xml; charset=utf-8',
-                'SOAPAction': 'cancer.gov/glossproxy/glossify'
+                'SOAPAction': 'cancer.gov/glossproxy/glossify',
+                'X-DEBUG-LEVEL': debug ? 3 : 1
             },
             body: reqBody            
         }
