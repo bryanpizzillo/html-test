@@ -5,7 +5,7 @@ async function glossify({ content, language = "en", debug = false } = {}) {
 	const reqBody = `<?xml version=\"1.0\"?>
 	 <soapenv:Envelope 
 		xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-		xmlns:m="cancer.gov/glossproxy">
+		xmlns:m="cips.nci.nih.gov/cdr">
 		<soapenv:Header/>
 		<soapenv:Body>
 			<m:glossify>
@@ -23,7 +23,7 @@ async function glossify({ content, language = "en", debug = false } = {}) {
             mode: 'cors',
             headers: {
                 'Content-type': 'text/xml; charset=utf-8',
-                'SOAPAction': 'cancer.gov/glossproxy/glossify',
+                'SOAPAction': 'cips.nci.nih.gov/cdr/glossify',
                 'X-DEBUG-LEVEL': debug ? 3 : 1
             },
             body: reqBody            
